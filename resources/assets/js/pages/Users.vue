@@ -1,41 +1,38 @@
 <template>
     <div class="page_wrap_vue users_view">
         <v-tabs dark v-model="active">
-            <v-tabs-bar class="cyan">
-                <v-tabs-item href="#users" ripple>
+                <v-tab href="#users" ripple>
                     Users
-                </v-tabs-item>
-                <v-tabs-item href="#groups" ripple>
+                </v-tab>
+                <v-tab href="#groups" ripple>
                     Groups
-                </v-tabs-item>
-                <v-tabs-item href="#permissions" ripple>
+                </v-tab>
+                <v-tab href="#permissions" ripple>
                     Permissions
-                </v-tabs-item>
+                </v-tab>
                 <v-tabs-slider class="yellow"></v-tabs-slider>
-            </v-tabs-bar>
-            <v-tabs-items>
-                <v-tabs-content id="users">
+
+                <v-tab-item id="users">
                     <v-card flat>
                         <v-card-text>
                             <user-lists></user-lists>
                         </v-card-text>
                     </v-card>
-                </v-tabs-content>
-                <v-tabs-content id="groups">
+                </v-tab-item>
+                <v-tab-item id="groups">
                     <v-card flat>
                         <v-card-text>
                             <group-lists></group-lists>
                         </v-card-text>
                     </v-card>
-                </v-tabs-content>
-                <v-tabs-content id="permissions">
+                </v-tab-item>
+                <v-tab-item id="permissions">
                     <v-card flat>
                         <v-card-text>
                             <permission-lists></permission-lists>
                         </v-card-text>
                     </v-card>
-                </v-tabs-content>
-            </v-tabs-items>
+                </v-tab-item>
         </v-tabs>
     </div>
 </template>

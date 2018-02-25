@@ -152,4 +152,14 @@ class UserController extends AdminController
             $results->getStatusCode()
         );
     }
+     public function verifyEmail($token)
+    {
+        $results = $this->userRepository->verifyEmail($token);
+
+        return $this->sendResponse(
+            $results->getMessage(),
+            $results->getData(),
+            $results->getStatusCode()
+        );
+    }
 }

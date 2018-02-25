@@ -31,4 +31,43 @@
 /* override */
 #admin .snack {
   z-index: 500 !important;
+  font-family:"Raleway";
+}
+.card {
+  border-radius:1rem !important;
+  border: 1px solid #e3e3e3 !important;
+  box-shadow:none !important;
+}
+.dialog {
+    border-radius:1rem !important;
+}
+.dialog .card {
+  border: none !important;
+}
+.application {
+  font-family: "Raleway" !important;
+}
+.headline {
+  font-weight: 500 !important;
+}
+.menuable__content__active {
+ z-index:250!important;
+}
+.no_border_radius {
+  border-radius: initial !important;
+  border: none !important;
+}
+
+// Transitions
+.fade-enter-active, .fade-leave-active {
+  transition-property: opacity;
+  transition-duration: .1s;
+}
+
+.fade-enter-active {
+  transition-delay: .1s;
+}
+
+.fade-enter, .fade-leave-active {
+  opacity: 0
 }

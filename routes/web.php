@@ -1,4 +1,5 @@
 <?php
+    	use App\Components\Core\Utilities\MenuHelper;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,4 +30,45 @@ Route::prefix('admin')->namespace('Admin')->middleware('auth')->group(function()
     Route::resource('permissions','PermissionController');
     Route::resource('files','FileController');
     Route::resource('file-groups','FileGroupController');
+    Route::resource('subjects','SubjectController');
+    Route::resource('user-subjects','UserSubjectController');
+    Route::resource('subject-users','subjectUsersController');
+    Route::get('/me/confirm-email/{token}','UserController@verifyEmail');
+
+});
+Route::get('/mailable', function () {
+    //$invoice = App\Invoice::find(1);
+
+    return new App\Mail\NewStudent("data");
+});
+    Route::resource('universities','UniversityController');
+
+// admin
+Route::prefix('public')->namespace('Public')->middleware('auth')->group(function()
+{
+    // single page
+    Route::get('/', function () {
+		MenuHelper::initMenu();
+    	return view('public.single-page');
+    } );
+    // single page
+    Route::get('/me', function () {
+    	return Auth::user()->load(['notifications', 'lessons.user']);
+    } );
+    Route::get('/me/notifications/markAsRead', function () {
+    	return Auth::user()->unreadNotifications->markAsRead();
+    } );
+
+
+
+    // resource routes
+    Route::resource('users','UserController');
+    Route::resource('groups','GroupController');
+    Route::resource('permissions','PermissionController');
+    Route::resource('files','FileController');
+    Route::resource('file-groups','FileGroupController');
+    Route::resource('subjects','SubjectController');
+    Route::resource('user-subjects','UserSubjectController');
+    Route::resource('subject-users','subjectUsersController');
+
 });

@@ -6,6 +6,8 @@ use App\Components\User\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use App\Notifications\Welcome;
+use Ramsey\Uuid\Uuid;
 
 class RegisterController extends Controller
 {
@@ -62,10 +64,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => $data['password'],
+            'activation_key' => (Uuid::uuid4())->toString()
         ]);
+
+        $user->notify(new Welcome($user->activation_key));
+
+        return $user;
     }
 }

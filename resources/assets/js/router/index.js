@@ -11,9 +11,16 @@ const router = new Router({
             redirect: '/dashboard',
         },
         {
-            name: 'dashboard',
-            path: '/dashboard',
-            component: require('../pages/Home.vue'),
+            path: '/area',
+            component: require('../pages/Area.vue')
+        },
+
+        { path: '/dashboard', component: require('../pages/home/index'), children: [
+            { path: '', redirect: { name: 'home.explore' }},
+            { path: 'explore', name: 'home.explore',  component: require('../pages/home/explore') },
+            { path: 'tutoring', name: 'home.tutoring', component: require('../pages/home/tutoring') },
+            { path: 'learning', name: 'home.learning', component: require('../pages/home/learning') }
+          ]
         },
         {
             name: 'users',
@@ -29,19 +36,29 @@ const router = new Router({
             name: 'settings',
             path: '/settings',
             component: require('../pages/Settings.vue'),
+        },
+        {
+            name: 'subjects',
+            path: '/subjects',
+            component: require('../pages/Subjects.vue'),
+        },
+        {
+            name: 'subject',
+            path: '/subject/:name',
+            component: require('../pages/Subject.vue'),
         }
     ],
 });
 
 router.beforeEach((to, from, next) => {
-    store.commit('showLoader');
+    //store.commit('index/showLoader');
     next();
 });
 
 router.afterEach((to, from) => {
     setTimeout(()=>{
-        store.commit('hideLoader');
-    },1000);
+        //store.commit('index/hideLoader');
+    },1300);
 });
 
 export default router;

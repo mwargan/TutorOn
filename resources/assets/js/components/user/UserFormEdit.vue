@@ -176,7 +176,7 @@
                     groups: self.groups,
                 };
 
-                self.$store.commit('showLoader');
+                self.$store.commit('index/showLoader');
 
                 axios.put('/admin/users/'+self.propUserId,payload).then(function(response) {
 

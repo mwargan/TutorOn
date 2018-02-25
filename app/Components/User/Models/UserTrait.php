@@ -68,6 +68,16 @@ trait UserTrait
     }
 
     /**
+     * the users meta
+     *
+     * @return mixed
+     */
+    public function lessons()
+    {
+        return $this->hasManyThrough('App\Components\UserClass\Models\UserClasses', 'App\Components\Subject\Models\UserClass', 'user_id', 'class_id');
+    }
+
+    /**
      * just a helper to parse a meta value from an array to object properties
      * so it will be easy to deal in UI portion
      *
@@ -93,6 +103,17 @@ trait UserTrait
         }
 
         return $metaClass;
+    }
+
+        /**
+     * Get user profile
+     * pic
+     *
+     * @return \StdClass
+     */
+    public function profilePicture()
+    {
+        return $this->hasOne("App\Components\File\Models\File", 'id', 'profile_picture_file_id', 'path');
     }
 
     /**

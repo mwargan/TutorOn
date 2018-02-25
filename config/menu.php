@@ -50,6 +50,14 @@ return [
         'route_name'=>'settings'
     ],
     [
+        'permission_requirements' => ['superuser'],
+        'label'=>'Subjects',
+        'nav_type' => 'nav',
+        'icon'=>'settings',
+        'route_type'=>'vue',
+        'route_name'=>'subjects'
+    ],
+    [
         'nav_type' => 'divider'
     ]
 ];

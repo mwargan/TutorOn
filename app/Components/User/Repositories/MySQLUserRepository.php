@@ -14,6 +14,8 @@ use App\Components\User\Contracts\UserRepository;
 use App\Components\User\Models\User;
 use App\Components\Core\Utilities\Helpers;
 use Ramsey\Uuid\Uuid;
+use App\Notifications\EmailConfirmed;
+
 
 class MySQLUserRepository implements UserRepository
 {
@@ -32,7 +34,7 @@ class MySQLUserRepository implements UserRepository
         $paginate = Helpers::hasValue($params['paginate'],'yes');
         $perPage = Helpers::hasValue($params['per_page'],10);
 
-        $q = User::with([])->orderBy($orderBy,$orderSort);
+        $q = User::with(['profilePicture', 'meta'])->orderBy($orderBy,$orderSort);
 
         (!$email) ?: $q = $q->where('email','like',"%{$email}%");
         (!$name) ?: $q = $q->where('name','like',"%{$name}%");
@@ -140,10 +142,28 @@ class MySQLUserRepository implements UserRepository
      */
     public function get($id)
     {
-        $User = User::with(['groups'])->find($id);
+        $User = User::with(['groups', 'meta', 'profilePicture'])->find($id);
 
         if(!$User) return new Result(false,'user not found',null,404);
 
         return new Result(true,Result::MESSAGE_SUCCESS,$User,200);
+    }
+
+    public function verifyEmail($token)
+    {
+        $user = User::where('activation_key', $token)->first();
+        if(isset($user)){
+            if(!$user->active) {
+                $user->active = \Carbon\Carbon::now();
+                $user->save();
+                $user->notify(new EmailConfirmed());
+                $status = "Your e-mail is verified. You can now login.";
+            }else{
+                $status = "Your e-mail is already verified. You can now login.";
+            }
+        }else{
+            return new Result(false,'user not found',null,404);
+        }
+        return new Result(true,Result::MESSAGE_SUCCESS,$user,200);
     }
 }

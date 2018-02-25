@@ -75,6 +75,7 @@
         <div class="top-right links">
             @auth
                 <a href="{{ url('/admin') }}">Dashboard</a>
+                <a href="{{ url('/public') }}">Public</a>
                 @else
                     <a href="{{ route('login') }}">Login</a>
                     <a href="{{ route('register') }}">Register</a>
